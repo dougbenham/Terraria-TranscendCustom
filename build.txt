@@ -1,0 +1,3 @@
+displayName = Doug's Customizations
+author = Doug
+version = 0.1
