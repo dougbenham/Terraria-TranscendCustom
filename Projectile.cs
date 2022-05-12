@@ -7,7 +7,7 @@ namespace DougCustom;
 public class Projectile : GlobalProjectile
 {
     private int _type = -1;
-
+    
     public override bool InstancePerEntity => true;
 
     public override bool PreAI(Terraria.Projectile projectile)
@@ -20,6 +20,7 @@ public class Projectile : GlobalProjectile
 
         return base.PreAI(projectile);
     }
+
     public override void PostAI(Terraria.Projectile projectile)
     {
         if (_type >= 0)
@@ -34,6 +35,7 @@ public class Projectile : GlobalProjectile
     {
         return Config.Instance.HomingProjectiles
                && projectile.owner == Main.myPlayer
+               && projectile.friendly
                && projectile.type != ProjectileID.LunarFlare
                && projectile.type != ProjectileID.NebulaBlaze1
                && projectile.type != ProjectileID.NebulaBlaze2
