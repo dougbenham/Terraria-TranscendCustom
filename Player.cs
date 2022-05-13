@@ -87,6 +87,12 @@ public class Player : ModPlayer
             Player.maxTurrets = 100;
     }
     
+    public override void ModifyManaCost(Terraria.Item item, ref float reduce, ref float mult)
+    {
+        if (Config.Instance.InfiniteMana)
+            mult = 0;
+    }
+
     public override bool CanConsumeAmmo(Terraria.Item weapon, Terraria.Item ammo)
     {
         return !Config.Instance.InfiniteAmmo;

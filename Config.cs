@@ -26,6 +26,9 @@ public class Config : ModConfig
 
     [Label("Infinite Ammo")] [DefaultValue(true)]
     public bool InfiniteAmmo;
+
+    [Label("Infinite Mana")] [DefaultValue(true)]
+    public bool InfiniteMana;
     
     [Label("Instant Respawn")] [DefaultValue(true)]
     public bool InstantRespawn;

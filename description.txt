@@ -8,6 +8,7 @@ All options are configurable!
 - Demi-god mode (can take damage but no death)
 - Scaling potions in shop
 - Infinite ammo
+- Infinite mana
 - Homing projectiles (bullets, arrows, spells, etc)
 - Instance respawn (with full health)
 - Max pick speed
@@ -19,5 +20,6 @@ All options are configurable!
 - Custom use times for any item (set with '/usetime n' command while selected)
 - Farming mode (greatly increased spawns) with keybind (default is open bracket)
 - Teleport to plantera bulb, if it is spawned (with '/plantera' command)
+- Set the time of day (set with '/time dusk', '/time midnight', '/time dawn', '/time noon')
 
 Source can be found @ https://github.com/dougbenham/Terraria-DougCustom
