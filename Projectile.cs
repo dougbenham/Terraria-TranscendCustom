@@ -36,19 +36,7 @@ public class Projectile : GlobalProjectile
         return Config.Instance.HomingProjectiles
                && projectile.owner == Main.myPlayer
                && projectile.friendly
-               && projectile.type != ProjectileID.LunarFlare
-               && projectile.type != ProjectileID.NebulaBlaze1
-               && projectile.type != ProjectileID.NebulaBlaze2
-               && projectile.type != ProjectileID.ChlorophyteBullet
-               && projectile.type != ProjectileID.VortexBeaterRocket
-               && projectile.type != ProjectileID.PygmySpear
-               && projectile.type != ProjectileID.MiniRetinaLaser
-               && projectile.type != ProjectileID.ElectrosphereMissile
-               && projectile.type != ProjectileID.Meteor1
-               && projectile.type != ProjectileID.Meteor2
-               && projectile.type != ProjectileID.Meteor3
-               && projectile.type != ProjectileID.MoonlordArrow
-               && projectile.type != ProjectileID.MoonlordArrowTrail
-               && projectile.type != ProjectileID.MiniSharkron;
+               && projectile.damage > 0
+               && projectile.aiStyle == 1;
     }
 }

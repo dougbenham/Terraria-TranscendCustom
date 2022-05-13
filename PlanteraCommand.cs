@@ -7,7 +7,7 @@ namespace DougCustom;
 
 public class PlanteraCommand : ModCommand
 {
-    private readonly int _planteraBulbTileLookup;
+    private int _planteraBulbTileLookup;
 
     public override CommandType Type => CommandType.Chat;
 
@@ -16,10 +16,11 @@ public class PlanteraCommand : ModCommand
     public override string Usage => "/plantera";
 
     public override string Description => "Teleport to plantera bulb";
-
-    public PlanteraCommand()
+    
+    public override void SetStaticDefaults()
     {
-        _planteraBulbTileLookup = Terraria.Map.MapHelper.TileToLookup(TileID.PlanteraBulb, 0);
+        if (Terraria.Map.MapHelper.tileLookup != null)
+            _planteraBulbTileLookup = Terraria.Map.MapHelper.TileToLookup(TileID.PlanteraBulb, 0);
     }
 
     public override void Action(CommandCaller caller, string input, string[] args)
