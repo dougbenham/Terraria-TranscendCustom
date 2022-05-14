@@ -10,7 +10,7 @@ All options are configurable!
 - Infinite ammo
 - Infinite mana
 - Homing projectiles (bullets, arrows, spells, etc)
-- Instance respawn (with full health)
+- Instant respawn (with full health)
 - Max pick speed
 - Max tile speed
 - Max wall speed

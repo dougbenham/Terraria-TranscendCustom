@@ -34,7 +34,6 @@ public class Projectile : GlobalProjectile
     private static bool ShouldModifyProjectile(Terraria.Projectile projectile)
     {
         return Config.Instance.HomingProjectiles
-               && projectile.owner == Main.myPlayer
                && projectile.friendly
                && projectile.damage > 0
                && projectile.aiStyle == 1;
