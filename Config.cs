@@ -5,29 +5,29 @@ namespace DougCustom;
 
 public class Config : ModConfig
 {
-    public override ConfigScope Mode => ConfigScope.ClientSide;
+    public override ConfigScope Mode => ConfigScope.ServerSide;
 
     public static Config Instance;
     
     [Label("Map Teleport")] [DefaultValue(true)]
     public bool MapTeleport;
     
-    [Label("Perma Buffs")] [DefaultValue(true)]
+    [Label("Perma Buffs")] [DefaultValue(false)]
     public bool PermaBuffs;
     
-    [Label("No Potion Sickness")] [DefaultValue(true)]
+    [Label("No Potion Sickness")] [DefaultValue(false)]
     public bool NoPotionSickness;
     
-    [Label("Demi-God Mode")] [DefaultValue(true)]
+    [Label("Demi-God Mode")] [DefaultValue(false)]
     public bool DemigodMode;
     
     [Label("Scaling Potions in Shop")] [DefaultValue(true)]
     public bool ScalingPotions;
 
-    [Label("Infinite Ammo")] [DefaultValue(true)]
+    [Label("Infinite Ammo")] [DefaultValue(false)]
     public bool InfiniteAmmo;
 
-    [Label("Infinite Mana")] [DefaultValue(true)]
+    [Label("Infinite Mana")] [DefaultValue(false)]
     public bool InfiniteMana;
     
     [Label("Instant Respawn")] [DefaultValue(true)]
