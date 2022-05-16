@@ -1,9 +1,7 @@
-All options are configurable!
-
+All of the following options are configurable:
 - Teleport on full-screen map with right-click
 - Teleport anywhere on screen with keybind (default is F)
 - Perma-buffs (dangersense, hunter, nightowl, spelunker)
-- 200 extra buff slots added
 - No potion sickness
 - Demi-god mode (can take damage but no death)
 - Scaling potions in shop
@@ -15,11 +13,16 @@ All options are configurable!
 - Max tile speed
 - Max wall speed
 - Max reach range
-- Max item pickup range and speed
+- Increased item pickup range
 - Max minions and turrets set to 100
 - Custom use times for any item (set with '/usetime n' command while selected)
 - Farming mode (greatly increased spawns) with keybind (default is open bracket)
 - Teleport to plantera bulb, if it is spawned (with '/plantera' command)
 - Set the time of day (set with '/time dusk', '/time midnight', '/time dawn', '/time noon')
+
+These are not configurable:
+- 200 extra buff slots added
+- Increased crafting station range
+- Increased item pickup speed
 
 Source can be found @ https://github.com/dougbenham/Terraria-DougCustom

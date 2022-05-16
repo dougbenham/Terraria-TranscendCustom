@@ -17,7 +17,7 @@ public class World : ModSystem
             var target = Main.MouseScreen;
             target.X -= Main.screenWidth / 2;
             target.Y -= Main.screenHeight / 2;
-            target /= Main.mapFullscreenScale - 0.22f; // weird extra scaling factor..
+            target /= Main.mapFullscreenScale;
             target += Main.mapFullscreenPos;
             target *= 16f;
             target.X -= player.width / 2;
