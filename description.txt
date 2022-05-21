@@ -7,6 +7,7 @@ All of the following options are configurable:
 - Scaling potions in shop
 - Infinite ammo
 - Infinite mana
+- Configurable max life and mana
 - Homing projectiles (bullets, arrows, spells, etc)
 - Instant respawn (with full health)
 - Max pick speed

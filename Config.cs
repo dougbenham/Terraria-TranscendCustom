@@ -30,7 +30,7 @@ public class Config : ModConfig
     [Label("Infinite Mana")] [DefaultValue(false)]
     public bool InfiniteMana;
     
-    [Label("Instant Respawn")] [DefaultValue(true)]
+    [Label("Instant Respawn with Full Health")] [DefaultValue(true)]
     public bool InstantRespawn;
 
     [Label("Max Pick Speed")] [DefaultValue(true)]
@@ -45,6 +45,12 @@ public class Config : ModConfig
     [Label("Max Reach Range")] [DefaultValue(true)]
     public bool MaxReachRange;
 
+    [Label("Max Crafting Range")] [DefaultValue(true)] [ReloadRequired]
+    public bool MaxCraftingRange;
+
+    [Label("Max Item Pickup Speed")] [DefaultValue(true)] [ReloadRequired]
+    public bool MaxItemPickupSpeed;
+
     [Label("Max Item Pickup Range")] [DefaultValue(true)]
     public bool MaxItemPickupRange;
 
@@ -56,4 +62,10 @@ public class Config : ModConfig
 
     [Label("Homing Projectiles")] [DefaultValue(true)]
     public bool HomingProjectiles;
+
+    [Label("Max Life Allowed")] [DefaultValue(500)] [Range(500, 5000)] [ReloadRequired]
+    public int MaxLifeAllowed;
+
+    [Label("Max Mana Allowed")] [DefaultValue(200)] [Range(200, 5000)] [ReloadRequired]
+    public int MaxManaAllowed;
 }

@@ -20,9 +20,12 @@ public class Player : ModPlayer
 
     public Player()
     {
-        var itemGrabSpeedField = typeof(Terraria.Player).GetField("itemGrabSpeed", BindingFlags.NonPublic | BindingFlags.Static);
-        if (itemGrabSpeedField != null)
-            itemGrabSpeedField.SetValue(null, 10f);
+        if (Config.Instance.MaxItemPickupSpeed)
+        {
+            var itemGrabSpeedField = typeof(Terraria.Player).GetField("itemGrabSpeed", BindingFlags.NonPublic | BindingFlags.Static);
+            if (itemGrabSpeedField != null)
+                itemGrabSpeedField.SetValue(null, 10f);
+        }
     }
 
     public override void PreUpdate()
