@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public class Player : ModPlayer
 {

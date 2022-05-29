@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public class World : ModSystem
 {

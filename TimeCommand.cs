@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public class TimeCommand : ModCommand
 {

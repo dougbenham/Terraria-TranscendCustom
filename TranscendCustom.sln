@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DougCustom", "DougCustom.csproj", "{B01B20E0-FC94-4EDC-9343-F0F22FDE0EA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TranscendCustom", "TranscendCustom.csproj", "{B01B20E0-FC94-4EDC-9343-F0F22FDE0EA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

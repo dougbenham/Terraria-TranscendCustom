@@ -3,7 +3,7 @@ using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Terraria.ModLoader;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public class DougCustom : Mod
 {

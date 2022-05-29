@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public class Config : ModConfig
 {

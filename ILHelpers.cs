@@ -2,7 +2,7 @@
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public static class ILHelpers
 {

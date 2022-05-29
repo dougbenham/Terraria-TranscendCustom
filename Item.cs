@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Terraria.ModLoader;
 
-namespace DougCustom;
+namespace TranscendCustom;
 
 public class Item : GlobalItem
 {
