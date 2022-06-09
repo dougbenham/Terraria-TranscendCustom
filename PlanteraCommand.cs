@@ -3,40 +3,44 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TranscendCustom;
-
-public class PlanteraCommand : ModCommand
+namespace TranscendsCustomizations
 {
-    private int _planteraBulbTileLookup;
-
-    public override CommandType Type => CommandType.Chat;
-
-    public override string Command => "plantera";
-
-    public override string Usage => "/plantera";
-
-    public override string Description => "Teleport to plantera bulb";
-    
-    public override void SetStaticDefaults()
+    public class PlanteraCommand : ModCommand
     {
-        if (Terraria.Map.MapHelper.tileLookup != null)
-            _planteraBulbTileLookup = Terraria.Map.MapHelper.TileToLookup(TileID.PlanteraBulb, 0);
-    }
+        private int _planteraBulbTileLookup;
 
-    public override void Action(CommandCaller caller, string input, string[] args)
-    {
-        for (int i = 0; i < Main.Map.MaxWidth; i++)
+        public override CommandType Type => CommandType.Chat;
+
+        public override string Command => "plantera";
+
+        public override string Usage => "/plantera";
+
+        public override string Description => "Teleport to plantera bulb";
+
+        /// <inheritdoc />
+        public override bool Autoload(ref string name)
         {
-            for (int j = 0; j < Main.Map.MaxHeight; j++)
+	        if (Terraria.Map.MapHelper.tileLookup != null)
+		        _planteraBulbTileLookup = Terraria.Map.MapHelper.TileToLookup(TileID.PlanteraBulb, 0);
+
+	        return base.Autoload(ref name);
+        }
+
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            for (int i = 0; i < Main.Map.MaxWidth; i++)
             {
-                if (Main.Map[i, j].Type == _planteraBulbTileLookup)
+                for (int j = 0; j < Main.Map.MaxHeight; j++)
                 {
-                    var player = caller.Player;
-                    var vector = new Vector2(i * 16, j * 16);
-                    player.Teleport(vector, 1, 0);
-                    player.velocity = Vector2.Zero;
-                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, vector.X, vector.Y, 1, 0, 0);
-                    return;
+                    if (Main.Map[i, j].Type == _planteraBulbTileLookup)
+                    {
+                        var player = caller.Player;
+                        var vector = new Vector2(i * 16, j * 16);
+                        player.Teleport(vector, 1, 0);
+                        player.velocity = Vector2.Zero;
+                        NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, vector.X, vector.Y, 1, 0, 0);
+                        return;
+                    }
                 }
             }
         }

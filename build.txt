@@ -1,3 +1,4 @@
 displayName = Transcend's Customizations
 author = Transcend
 version = 1.2
+homepage = https://github.com/dougbenham/Terraria-TranscendCustom-1.3

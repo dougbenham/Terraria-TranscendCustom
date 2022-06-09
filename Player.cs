@@ -10,131 +10,135 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace TranscendCustom;
-
-public class Player : ModPlayer
+namespace TranscendsCustomizations
 {
-    private static readonly int _defaultTileRangeX = Terraria.Player.tileRangeX;
-    private static readonly int _defaultTileRangeY = Terraria.Player.tileRangeY;
-    private static readonly int _defaultItemGrabRange = Terraria.Player.defaultItemGrabRange;
-
-    public Player()
+    public class Player : ModPlayer
     {
-        if (Config.Instance.MaxItemPickupSpeed)
-        {
-            var itemGrabSpeedField = typeof(Terraria.Player).GetField("itemGrabSpeed", BindingFlags.NonPublic | BindingFlags.Static);
-            if (itemGrabSpeedField != null)
-                itemGrabSpeedField.SetValue(null, 10f);
-        }
-    }
+        private static readonly int _defaultTileRangeX = Terraria.Player.tileRangeX;
+        private static readonly int _defaultTileRangeY = Terraria.Player.tileRangeY;
+        private static readonly int _defaultItemGrabRange = Terraria.Player.defaultItemGrabRange;
 
-    public override void PreUpdate()
-    {
-        if (Config.Instance.PermaBuffs)
+        public Player()
         {
-            Player.AddBuff(BuffID.Dangersense, 2);
-            Player.AddBuff(BuffID.Hunter, 2);
-            Player.AddBuff(BuffID.NightOwl, 2);
-            Player.AddBuff(BuffID.Spelunker, 2);
+            if (Config.Instance.MaxItemPickupSpeed)
+            {
+                var itemGrabSpeedField = typeof(Terraria.Player).GetField("itemGrabSpeed", BindingFlags.NonPublic | BindingFlags.Static);
+                if (itemGrabSpeedField != null)
+                    itemGrabSpeedField.SetValue(null, 10f);
+            }
         }
 
-        if (Config.Instance.NoPotionSickness)
+        public override void PreUpdate()
         {
-            Player.potionDelay = 0;
+            if (Config.Instance.PermaBuffs)
+            {
+	            player.AddBuff(BuffID.Dangersense, 2);
+	            player.AddBuff(BuffID.Hunter, 2);
+	            player.AddBuff(BuffID.NightOwl, 2);
+	            player.AddBuff(BuffID.Spelunker, 2);
+            }
 
-            var i = Player.FindBuffIndex(BuffID.PotionSickness);
-            if (i >= 0)
-                Player.DelBuff(i);
+            if (Config.Instance.NoPotionSickness)
+            {
+	            player.potionDelay = 0;
+
+                var i = player.FindBuffIndex(BuffID.PotionSickness);
+                if (i >= 0)
+	                player.DelBuff(i);
+            }
         }
-    }
-    
-    public override void ProcessTriggers(TriggersSet triggersSet)
-    {
-        if (DougCustom.CrazySpawnsKeybind.JustPressed)
+
+        public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            NPC.FarmingMode = !NPC.FarmingMode;
-            Main.NewText("Farming mode is " + (NPC.FarmingMode ? "on" : "off"));
+            if (TranscendsCustomizations.CrazySpawnsKeybind.JustPressed)
+            {
+                NPC.FarmingMode = !NPC.FarmingMode;
+                Main.NewText("Farming mode is " + (NPC.FarmingMode ? "on" : "off"));
+            }
+
+            if (TranscendsCustomizations.TeleportKeybind.JustPressed)
+            {
+                var vector = new Vector2(Main.mouseX + Main.screenPosition.X, Main.mouseY + Main.screenPosition.Y);
+                player.Teleport(vector, 1, 0);
+                player.velocity = Vector2.Zero;
+                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, vector.X, vector.Y, 1, 0, 0);
+            }
         }
 
-        if (DougCustom.TeleportKeybind.JustPressed)
+        public override void ResetEffects()
         {
-            var vector = new Vector2(Main.mouseX + Main.screenPosition.X, Main.mouseY + Main.screenPosition.Y);
-            Player.Teleport(vector, 1, 0);
-            Player.velocity = Vector2.Zero;
-            NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, Player.whoAmI, vector.X, vector.Y, 1, 0, 0);
+            SetBlockRange();
         }
-    }
-    
-    public override void ResetEffects()
-    {
-        SetBlockRange();
-    }
 
-    public override void PostUpdateBuffs()
-    {
-        SetBlockRange();
-    }
-
-    private void SetBlockRange()
-    {
-        Terraria.Player.tileRangeX = Config.Instance.MaxReachRange ? 100 : _defaultTileRangeX;
-        Terraria.Player.tileRangeY = Config.Instance.MaxReachRange ? 100 : _defaultTileRangeY;
-        Terraria.Player.defaultItemGrabRange = Config.Instance.MaxItemPickupRange ? 1000 : _defaultItemGrabRange;
-    }
-
-    public override void UpdateEquips()
-    {
-        if (Config.Instance.MaxMinions)
-            Player.maxMinions = 100;
-        if (Config.Instance.MaxTurrets)
-            Player.maxTurrets = 100;
-    }
-    
-    public override void ModifyManaCost(Terraria.Item item, ref float reduce, ref float mult)
-    {
-        if (Config.Instance.InfiniteMana)
-            mult = 0;
-    }
-
-    public override bool CanConsumeAmmo(Terraria.Item weapon, Terraria.Item ammo)
-    {
-        return !Config.Instance.InfiniteAmmo;
-    }
-
-    public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
-    {
-        return !Config.Instance.DemigodMode;
-    }
-
-    public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
-    {
-        if (Config.Instance.InstantRespawn)
-            Player.respawnTimer = 0;
-    }
-
-    public override void OnRespawn(Terraria.Player player)
-    {
-        if (Config.Instance.InstantRespawn)
-            player.statLife = player.statLifeMax;
-    }
-
-    public override void SaveData(TagCompound tag)
-    {
-        tag.Add(nameof(Item.CustomUseTimes) + "_Keys", Item.CustomUseTimes.Keys.ToList());
-        tag.Add(nameof(Item.CustomUseTimes) + "_Values", Item.CustomUseTimes.Values.ToList());
-    }
-
-    public override void LoadData(TagCompound tag)
-    {
-        try
+        public override void PostUpdateBuffs()
         {
-            var keys = tag.Get<List<int>>(nameof(Item.CustomUseTimes) + "_Keys");
-            var values = tag.Get<List<int>>(nameof(Item.CustomUseTimes) + "_Values");
-            Item.CustomUseTimes = new(Enumerable.Zip(keys, values, KeyValuePair.Create));
+            SetBlockRange();
         }
-        catch (Exception e)
+
+        private void SetBlockRange()
         {
-            base.Mod.Logger.WarnFormat("DougCustom.Player.LoadData() - WARNING! Could not load CustomUseTimes. Exception: {0}", e.Message);
+            Terraria.Player.tileRangeX = Config.Instance.MaxReachRange ? 100 : _defaultTileRangeX;
+            Terraria.Player.tileRangeY = Config.Instance.MaxReachRange ? 100 : _defaultTileRangeY;
+            Terraria.Player.defaultItemGrabRange = Config.Instance.MaxItemPickupRange ? 1000 : _defaultItemGrabRange;
+        }
+        
+        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
+        {
+	        if (Config.Instance.MaxMinions)
+		        player.maxMinions = 100;
+	        if (Config.Instance.MaxTurrets)
+		        player.maxTurrets = 100;
+        }
+
+        public override void ModifyManaCost(Terraria.Item item, ref float reduce, ref float mult)
+        {
+            if (Config.Instance.InfiniteMana)
+                mult = 0;
+        }
+
+        /// <inheritdoc />
+        public override bool ConsumeAmmo(Terraria.Item weapon, Terraria.Item ammo)
+        {
+	        return !Config.Instance.InfiniteAmmo;
+        }
+        
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            return !Config.Instance.DemigodMode;
+        }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            if (Config.Instance.InstantRespawn)
+                player.respawnTimer = 0;
+        }
+        
+        public override void OnRespawn(Terraria.Player player)
+        {
+            if (Config.Instance.InstantRespawn)
+                player.statLife = player.statLifeMax;
+        }
+        
+        public override TagCompound Save()
+        {
+	        var tag = new TagCompound();
+	        tag.Add(nameof(Item.CustomUseTimes) + "_Keys", Item.CustomUseTimes.Keys.ToList());
+	        tag.Add(nameof(Item.CustomUseTimes) + "_Values", Item.CustomUseTimes.Values.ToList());
+	        return tag;
+        }
+        
+        public override void Load(TagCompound tag)
+        {
+            try
+            {
+                var keys = tag.Get<List<int>>(nameof(Item.CustomUseTimes) + "_Keys");
+                var values = tag.Get<List<int>>(nameof(Item.CustomUseTimes) + "_Values");
+                Item.CustomUseTimes = Enumerable.Zip(keys, values, (i, i1) => new KeyValuePair<int, int>(i, i1)).ToDictionary(p => p.Key, p => p.Value);
+            }
+            catch (Exception e)
+            {
+                base.mod.Logger.WarnFormat("DougCustom.Player.LoadData() - WARNING! Could not load CustomUseTimes. Exception: {0}", e.Message);
+            }
         }
     }
 }

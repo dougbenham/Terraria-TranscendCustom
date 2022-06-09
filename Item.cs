@@ -1,45 +1,47 @@
 ﻿using System.Collections.Generic;
 using Terraria.ModLoader;
 
-namespace TranscendCustom;
-
-public class Item : GlobalItem
+namespace TranscendsCustomizations
 {
-    public static readonly Dictionary<int, int> DefaultUseTimes = new();
-    public static Dictionary<int, int> CustomUseTimes = new();
-
-
-    public override void SetDefaults(Terraria.Item item)
+    public class Item : GlobalItem
     {
-        DefaultUseTimes.TryAdd(item.type, item.useTime);
+        public static readonly Dictionary<int, int> DefaultUseTimes = new Dictionary<int, int>();
+        public static Dictionary<int, int> CustomUseTimes = new Dictionary<int, int>();
 
-        SetUseTime(item);
-    }
-    
-    public override bool? UseItem(Terraria.Item item, Terraria.Player player)
-    {
-        SetUseTime(item);
+        public override void SetDefaults(Terraria.Item item)
+        {
+            if (!DefaultUseTimes.ContainsKey(item.type))
+				DefaultUseTimes[item.type] = item.useTime;
 
-        return base.UseItem(item, player);
-    }
+            SetUseTime(item);
+        }
 
-    private static void SetUseTime(Terraria.Item item)
-    {
-        if (CustomUseTimes.TryGetValue(item.type, out var v))
-            item.useTime = v;
+        /// <inheritdoc />
+        public override bool UseItem(Terraria.Item item, Terraria.Player player)
+        {
+	        SetUseTime(item);
 
-        else if (Config.Instance.MaxPickSpeed && (item.axe > 0 ||
-                                                  item.pick > 0 ||
-                                                  item.hammer > 0))
-            item.useTime = 1;
+	        return base.UseItem(item, player);
+        }
 
-        else if (Config.Instance.MaxTileSpeed && item.createTile >= 0)
-            item.useTime = 0;
+        private static void SetUseTime(Terraria.Item item)
+        {
+            if (CustomUseTimes.TryGetValue(item.type, out var v))
+                item.useTime = v;
 
-        else if (Config.Instance.MaxWallSpeed && item.createWall >= 0)
-            item.useTime = 0;
+            else if (Config.Instance.MaxPickSpeed && (item.axe > 0 ||
+                                                      item.pick > 0 ||
+                                                      item.hammer > 0))
+                item.useTime = 1;
 
-        else
-            item.useTime = DefaultUseTimes[item.type];
+            else if (Config.Instance.MaxTileSpeed && item.createTile >= 0)
+                item.useTime = 0;
+
+            else if (Config.Instance.MaxWallSpeed && item.createWall >= 0)
+                item.useTime = 0;
+
+            else
+                item.useTime = DefaultUseTimes[item.type];
+        }
     }
 }
