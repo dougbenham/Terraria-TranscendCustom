@@ -15,16 +15,8 @@ namespace TranscendsCustomizations
 
             SetUseTime(item);
         }
-
-        /// <inheritdoc />
-        public override bool UseItem(Terraria.Item item, Terraria.Player player)
-        {
-	        SetUseTime(item);
-
-	        return base.UseItem(item, player);
-        }
-
-        private static void SetUseTime(Terraria.Item item)
+        
+        internal static void SetUseTime(Terraria.Item item)
         {
             if (CustomUseTimes.TryGetValue(item.type, out var v))
                 item.useTime = v;

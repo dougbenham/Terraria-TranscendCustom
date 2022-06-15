@@ -140,5 +140,13 @@ namespace TranscendsCustomizations
                 base.mod.Logger.WarnFormat("DougCustom.Player.LoadData() - WARNING! Could not load CustomUseTimes. Exception: {0}", e.Message);
             }
         }
+
+        /// <inheritdoc />
+        public override bool PreItemCheck()
+        {
+            Item.SetUseTime(player.inventory[player.selectedItem]);
+
+	        return base.PreItemCheck();
+        }
     }
 }
