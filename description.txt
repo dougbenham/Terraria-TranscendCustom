@@ -26,4 +26,4 @@ All of the following options are configurable:
 These are not configurable:
 - 200 extra buff slots added
 
-Source can be found @ https://github.com/dougbenham/Terraria-TranscendCustom
+Source can be found @ https://github.com/dougbenham/Terraria-TranscendCustom/tree/main-1.4
