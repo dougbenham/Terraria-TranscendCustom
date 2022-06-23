@@ -11,7 +11,8 @@ public class Item : GlobalItem
 
     public override void SetDefaults(Terraria.Item item)
     {
-        DefaultUseTimes.TryAdd(item.type, item.useTime);
+        lock (DefaultUseTimes)
+			DefaultUseTimes.TryAdd(item.type, item.useTime);
 
         SetUseTime(item);
     }
