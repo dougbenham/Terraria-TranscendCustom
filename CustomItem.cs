@@ -27,10 +27,10 @@ namespace TranscendsCustomizations
                 item.useTime = 1;
 
             else if (Config.Instance.MaxTileSpeed && item.createTile >= 0)
-                item.useTime = 0;
+                item.useTime = 1;
 
             else if (Config.Instance.MaxWallSpeed && item.createWall >= 0)
-                item.useTime = 0;
+                item.useTime = 1;
 
             else
                 item.useTime = DefaultUseTimes[item.type];
