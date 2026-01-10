@@ -31,13 +31,13 @@ namespace TranscendsCustomizations
 
             if (args.Length < 1 || !int.TryParse(args[0], out var value))
             {
-                Item.CustomUseTimes.Remove(item.type);
-                Main.NewText($"Reset UseTime on {item.Name} to {Item.DefaultUseTimes[item.type]}");
+                CustomItem.CustomUseTimes.TryRemove(item.type, out _);
+                Main.NewText($"Reset UseTime on {item.Name} to {CustomItem.DefaultUseTimes[item.type]}");
             }
             else
             {
-                Item.CustomUseTimes[item.type] = value;
-                Main.NewText($"Set UseTime of {item.Name} to {value} (default is {Item.DefaultUseTimes[item.type]})");
+                CustomItem.CustomUseTimes[item.type] = value;
+                Main.NewText($"Set UseTime of {item.Name} to {value} (default is {CustomItem.DefaultUseTimes[item.type]})");
             }
         }
     }

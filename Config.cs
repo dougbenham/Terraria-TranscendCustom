@@ -82,17 +82,5 @@ namespace TranscendsCustomizations
         [Label("Homing Projectiles")]
         [DefaultValue(true)]
         public bool HomingProjectiles;
-
-        [Label("Max Life Allowed")]
-        [DefaultValue(500)]
-        [Range(500, 5000)]
-        [ReloadRequired]
-        public int MaxLifeAllowed;
-
-        [Label("Max Mana Allowed")]
-        [DefaultValue(200)]
-        [Range(200, 5000)]
-        [ReloadRequired]
-        public int MaxManaAllowed;
     }
 }

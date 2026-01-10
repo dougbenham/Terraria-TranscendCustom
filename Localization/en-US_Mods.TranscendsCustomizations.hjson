@@ -1,0 +1,100 @@
+Keybinds: {
+	"Teleport to cursor.DisplayName": Teleport to cursor
+	"Farming mode.DisplayName": Farming mode
+}
+
+Configs: {
+	Config: {
+		DisplayName: Config
+
+		MapTeleport: {
+			Label: Map Teleport
+			Tooltip: ""
+		}
+
+		PermaBuffs: {
+			Label: Perma Buffs
+			Tooltip: ""
+		}
+
+		NoPotionSickness: {
+			Label: No Potion Sickness
+			Tooltip: ""
+		}
+
+		DemigodMode: {
+			Label: Demi-God Mode
+			Tooltip: ""
+		}
+
+		ScalingPotions: {
+			Label: Scaling Potions in Shop
+			Tooltip: ""
+		}
+
+		InfiniteAmmo: {
+			Label: Infinite Ammo
+			Tooltip: ""
+		}
+
+		InfiniteMana: {
+			Label: Infinite Mana
+			Tooltip: ""
+		}
+
+		InstantRespawn: {
+			Label: Instant Respawn with Full Health
+			Tooltip: ""
+		}
+
+		MaxPickSpeed: {
+			Label: Max Pick Speed
+			Tooltip: ""
+		}
+
+		MaxTileSpeed: {
+			Label: Max Tile Speed
+			Tooltip: ""
+		}
+
+		MaxWallSpeed: {
+			Label: Max Wall Speed
+			Tooltip: ""
+		}
+
+		MaxReachRange: {
+			Label: Max Reach Range
+			Tooltip: ""
+		}
+
+		MaxCraftingRange: {
+			Label: Max Crafting Range
+			Tooltip: ""
+		}
+
+		MaxItemPickupSpeed: {
+			Label: Max Item Pickup Speed
+			Tooltip: ""
+		}
+
+		MaxItemPickupRange: {
+			Label: Max Item Pickup Range
+			Tooltip: ""
+		}
+
+		MaxMinions: {
+			Label: Max Minions = 100
+			Tooltip: ""
+		}
+
+		MaxTurrets: {
+			Label: Max Turrets = 100
+			Tooltip: ""
+		}
+
+		HomingProjectiles: {
+			Label: Homing Projectiles
+			Tooltip: ""
+		}
+	}
+}

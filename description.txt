@@ -7,7 +7,6 @@ All of the following options are configurable:
 - Scaling potions in shop
 - Infinite ammo
 - Infinite mana
-- Configurable max life and mana
 - Homing projectiles (bullets, arrows, spells, etc)
 - Instant respawn (with full health)
 - Max pick speed
@@ -26,4 +25,4 @@ All of the following options are configurable:
 These are not configurable:
 - 200 extra buff slots added
 
-Source can be found @ https://github.com/dougbenham/Terraria-TranscendCustom-1.3
+Source can be found @ https://github.com/dougbenham/Terraria-TranscendCustom

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using Terraria.ModLoader;
 
 namespace TranscendsCustomizations
 {
-    public class Item : GlobalItem
+    public class CustomItem : GlobalItem
     {
-        public static readonly Dictionary<int, int> DefaultUseTimes = new Dictionary<int, int>();
-        public static Dictionary<int, int> CustomUseTimes = new Dictionary<int, int>();
+        public static readonly ConcurrentDictionary<int, int> DefaultUseTimes = new();
+        public static ConcurrentDictionary<int, int> CustomUseTimes = new();
 
         public override void SetDefaults(Terraria.Item item)
         {

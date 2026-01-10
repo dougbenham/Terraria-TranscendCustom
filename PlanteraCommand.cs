@@ -18,12 +18,10 @@ namespace TranscendsCustomizations
         public override string Description => "Teleport to plantera bulb";
 
         /// <inheritdoc />
-        public override bool Autoload(ref string name)
+        public override void SetStaticDefaults()
         {
 	        if (Terraria.Map.MapHelper.tileLookup != null)
 		        _planteraBulbTileLookup = Terraria.Map.MapHelper.TileToLookup(TileID.PlanteraBulb, 0);
-
-	        return base.Autoload(ref name);
         }
 
         public override void Action(CommandCaller caller, string input, string[] args)
@@ -38,7 +36,7 @@ namespace TranscendsCustomizations
                         var vector = new Vector2(i * 16, j * 16);
                         player.Teleport(vector, 1, 0);
                         player.velocity = Vector2.Zero;
-                        NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, vector.X, vector.Y, 1, 0, 0);
+                        NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, player.whoAmI, vector.X, vector.Y, 1, 0, 0);
                         return;
                     }
                 }

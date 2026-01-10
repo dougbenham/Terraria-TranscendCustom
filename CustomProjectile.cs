@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace TranscendsCustomizations
 {
-    public class Projectile : GlobalProjectile
+    public class CustomProjectile : GlobalProjectile
     {
         private int _type = -1;
 

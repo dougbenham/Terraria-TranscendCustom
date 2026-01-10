@@ -12,13 +12,13 @@ using Terraria.ModLoader.IO;
 
 namespace TranscendsCustomizations
 {
-    public class Player : ModPlayer
+    public class CustomPlayer : ModPlayer
     {
         private static readonly int _defaultTileRangeX = Terraria.Player.tileRangeX;
         private static readonly int _defaultTileRangeY = Terraria.Player.tileRangeY;
         private static readonly int _defaultItemGrabRange = Terraria.Player.defaultItemGrabRange;
 
-        public Player()
+        public CustomPlayer()
         {
             if (Config.Instance.MaxItemPickupSpeed)
             {
@@ -27,24 +27,24 @@ namespace TranscendsCustomizations
                     itemGrabSpeedField.SetValue(null, 10f);
             }
         }
-
+		
         public override void PreUpdate()
         {
             if (Config.Instance.PermaBuffs)
             {
-	            player.AddBuff(BuffID.Dangersense, 2);
-	            player.AddBuff(BuffID.Hunter, 2);
-	            player.AddBuff(BuffID.NightOwl, 2);
-	            player.AddBuff(BuffID.Spelunker, 2);
+	            Player.AddBuff(BuffID.Dangersense, 2);
+	            Player.AddBuff(BuffID.Hunter, 2);
+	            Player.AddBuff(BuffID.NightOwl, 2);
+	            Player.AddBuff(BuffID.Spelunker, 2);
             }
 
             if (Config.Instance.NoPotionSickness)
             {
-	            player.potionDelay = 0;
+	            Player.potionDelay = 0;
 
-                var i = player.FindBuffIndex(BuffID.PotionSickness);
+                var i = Player.FindBuffIndex(BuffID.PotionSickness);
                 if (i >= 0)
-	                player.DelBuff(i);
+	                Player.DelBuff(i);
             }
         }
 
@@ -52,16 +52,16 @@ namespace TranscendsCustomizations
         {
             if (TranscendsCustomizations.CrazySpawnsKeybind.JustPressed)
             {
-                NPC.FarmingMode = !NPC.FarmingMode;
-                Main.NewText("Farming mode is " + (NPC.FarmingMode ? "on" : "off"));
+	            CustomNPC.FarmingMode = !CustomNPC.FarmingMode;
+                Main.NewText("Farming mode is " + (CustomNPC.FarmingMode ? "on" : "off"));
             }
 
             if (TranscendsCustomizations.TeleportKeybind.JustPressed)
             {
                 var vector = new Vector2(Main.mouseX + Main.screenPosition.X, Main.mouseY + Main.screenPosition.Y);
-                player.Teleport(vector, 1, 0);
-                player.velocity = Vector2.Zero;
-                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, vector.X, vector.Y, 1, 0, 0);
+                Player.Teleport(vector, 1, 0);
+                Player.velocity = Vector2.Zero;
+                NetMessage.SendData(MessageID.TeleportEntity, -1, -1, null, 0, Player.whoAmI, vector.X, vector.Y, 1, 0, 0);
             }
         }
 
@@ -81,13 +81,14 @@ namespace TranscendsCustomizations
             Terraria.Player.tileRangeY = Config.Instance.MaxReachRange ? 100 : _defaultTileRangeY;
             Terraria.Player.defaultItemGrabRange = Config.Instance.MaxItemPickupRange ? 1000 : _defaultItemGrabRange;
         }
-        
-        public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
+
+        /// <inheritdoc />
+        public override void UpdateEquips()
         {
 	        if (Config.Instance.MaxMinions)
-		        player.maxMinions = 100;
+		        Player.maxMinions = 100;
 	        if (Config.Instance.MaxTurrets)
-		        player.maxTurrets = 100;
+		        Player.maxTurrets = 100;
         }
 
         public override void ModifyManaCost(Terraria.Item item, ref float reduce, ref float mult)
@@ -97,7 +98,7 @@ namespace TranscendsCustomizations
         }
 
         /// <inheritdoc />
-        public override bool ConsumeAmmo(Terraria.Item weapon, Terraria.Item ammo)
+        public override bool CanConsumeAmmo(Terraria.Item weapon, Terraria.Item ammo)
         {
 	        return !Config.Instance.InfiniteAmmo;
         }
@@ -110,41 +111,39 @@ namespace TranscendsCustomizations
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {
             if (Config.Instance.InstantRespawn)
-                player.respawnTimer = 0;
+                Player.respawnTimer = 0;
         }
         
-        public override void OnRespawn(Terraria.Player player)
+        public override void OnRespawn()
         {
             if (Config.Instance.InstantRespawn)
-                player.statLife = player.statLifeMax;
+                Player.statLife = Player.statLifeMax;
         }
         
-        public override TagCompound Save()
+        public override void SaveData(TagCompound tag)
         {
-	        var tag = new TagCompound();
-	        tag.Add(nameof(Item.CustomUseTimes) + "_Keys", Item.CustomUseTimes.Keys.ToList());
-	        tag.Add(nameof(Item.CustomUseTimes) + "_Values", Item.CustomUseTimes.Values.ToList());
-	        return tag;
+	        tag.Add(nameof(CustomItem.CustomUseTimes) + "_Keys", CustomItem.CustomUseTimes.Keys.ToList());
+	        tag.Add(nameof(CustomItem.CustomUseTimes) + "_Values", CustomItem.CustomUseTimes.Values.ToList());
         }
         
-        public override void Load(TagCompound tag)
+        public override void LoadData(TagCompound tag)
         {
             try
             {
-                var keys = tag.Get<List<int>>(nameof(Item.CustomUseTimes) + "_Keys");
-                var values = tag.Get<List<int>>(nameof(Item.CustomUseTimes) + "_Values");
-                Item.CustomUseTimes = Enumerable.Zip(keys, values, (i, i1) => new KeyValuePair<int, int>(i, i1)).ToDictionary(p => p.Key, p => p.Value);
+                var keys = tag.Get<List<int>>(nameof(CustomItem.CustomUseTimes) + "_Keys");
+                var values = tag.Get<List<int>>(nameof(CustomItem.CustomUseTimes) + "_Values");
+                CustomItem.CustomUseTimes = new(Enumerable.Zip(keys, values, KeyValuePair.Create));
             }
             catch (Exception e)
             {
-                base.mod.Logger.WarnFormat("DougCustom.Player.LoadData() - WARNING! Could not load CustomUseTimes. Exception: {0}", e.Message);
+                base.Mod.Logger.WarnFormat("CustomPlayer.LoadData(): Could not load CustomUseTimes. Exception: {0}", e.Message);
             }
         }
 
         /// <inheritdoc />
         public override bool PreItemCheck()
         {
-            Item.SetUseTime(player.inventory[player.selectedItem]);
+            CustomItem.SetUseTime(Player.inventory[Player.selectedItem]);
 
 	        return base.PreItemCheck();
         }
