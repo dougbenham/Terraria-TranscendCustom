@@ -22,9 +22,13 @@ namespace TranscendsCustomizations
         {
             if (Config.Instance.MaxItemPickupSpeed)
             {
+	            var itemGrabSpeedMaxField = typeof(Terraria.Player).GetField("itemGrabSpeedMax", BindingFlags.NonPublic | BindingFlags.Static);
+	            if (itemGrabSpeedMaxField != null)
+		            itemGrabSpeedMaxField.SetValue(null, 15f); // default is 4
+
                 var itemGrabSpeedField = typeof(Terraria.Player).GetField("itemGrabSpeed", BindingFlags.NonPublic | BindingFlags.Static);
                 if (itemGrabSpeedField != null)
-                    itemGrabSpeedField.SetValue(null, 10f);
+                    itemGrabSpeedField.SetValue(null, 10f); // default is 0.45
             }
         }
 		

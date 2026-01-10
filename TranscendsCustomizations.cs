@@ -20,6 +20,8 @@ namespace TranscendsCustomizations
 			
 			if (Config.Instance.MaxCraftingRange)
 				Terraria.IL_Player.AdjTiles += Player_AdjTiles;
+
+            Terraria.DataStructures.On_TileReachCheckSettings.GetRanges += On_TileReachCheckSettings_GetRanges;
 			
 			if (Config.Instance.DemigodMode)
 			{
@@ -43,7 +45,14 @@ namespace TranscendsCustomizations
 			}
 		}
 
-		private void CalamityPlayer_KillPlayer(ILContext il)
+        private void On_TileReachCheckSettings_GetRanges(Terraria.DataStructures.On_TileReachCheckSettings.orig_GetRanges orig, ref Terraria.DataStructures.TileReachCheckSettings self, Terraria.Player player, out int x, out int y)
+        {
+            if (Config.Instance.MaxReachRange)
+	            self.TileReachLimit = null;
+            orig(ref self, player, out x, out y);
+        }
+
+        private void CalamityPlayer_KillPlayer(ILContext il)
 		{
 			var c = new ILCursor(il);
 			c.Emit(OpCodes.Ret);
