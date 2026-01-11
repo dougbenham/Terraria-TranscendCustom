@@ -17,20 +17,6 @@ namespace TranscendsCustomizations
         private static readonly int _defaultTileRangeX = Terraria.Player.tileRangeX;
         private static readonly int _defaultTileRangeY = Terraria.Player.tileRangeY;
         private static readonly int _defaultItemGrabRange = Terraria.Player.defaultItemGrabRange;
-
-        public CustomPlayer()
-        {
-            if (Config.Instance.MaxItemPickupSpeed)
-            {
-	            var itemGrabSpeedMaxField = typeof(Terraria.Player).GetField("itemGrabSpeedMax", BindingFlags.NonPublic | BindingFlags.Static);
-	            if (itemGrabSpeedMaxField != null)
-		            itemGrabSpeedMaxField.SetValue(null, 15f); // default is 4
-
-                var itemGrabSpeedField = typeof(Terraria.Player).GetField("itemGrabSpeed", BindingFlags.NonPublic | BindingFlags.Static);
-                if (itemGrabSpeedField != null)
-                    itemGrabSpeedField.SetValue(null, 10f); // default is 0.45
-            }
-        }
 		
         public override void PreUpdate()
         {

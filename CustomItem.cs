@@ -1,4 +1,6 @@
 ﻿using System.Collections.Concurrent;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace TranscendsCustomizations
@@ -7,6 +9,17 @@ namespace TranscendsCustomizations
     {
         public static readonly ConcurrentDictionary<int, int> DefaultUseTimes = new();
         public static ConcurrentDictionary<int, int> CustomUseTimes = new();
+
+        /// <inheritdoc />
+        public override void GrabRange(Item item, Player player, ref int itemGrabRange)
+        {
+	        if (Config.Instance.MaxItemPickupSpeed)
+	        {
+                if (Config.Instance.MaxItemPickupRange || 
+                    (new Rectangle((int)player.position.X - itemGrabRange, (int)player.position.Y - itemGrabRange, player.width + itemGrabRange * 2, player.height + itemGrabRange * 2).Intersects(item.Hitbox)))
+		            item.position = player.position;
+	        }
+        }
 
         public override void SetDefaults(Terraria.Item item)
         {
@@ -32,8 +45,8 @@ namespace TranscendsCustomizations
             else if (Config.Instance.MaxWallSpeed && item.createWall >= 0)
                 item.useTime = 1;
 
-            else
-                item.useTime = DefaultUseTimes[item.type];
+            else if (DefaultUseTimes.TryGetValue(item.type, out var d))
+                item.useTime = d;
         }
     }
 }
