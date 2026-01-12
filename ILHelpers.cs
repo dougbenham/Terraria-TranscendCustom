@@ -1,25 +1,22 @@
 ﻿using System;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
 
 namespace TranscendsCustomizations
 {
     public static class ILHelpers
     {
-        public static int ScanForOpcodePattern(this MethodDefinition m, params OpCode[] inst)
+        public static int ScanForOpcodePattern(this ILProcessor il, params OpCode[] inst)
         {
-            return ScanForOpcodePattern(m, (v, i) => true, 0, inst);
+            return ScanForOpcodePattern(il, (v, i) => true, 0, inst);
         }
 
-        public static int ScanForOpcodePattern(this MethodDefinition m, Func<int, Instruction, bool> check, params OpCode[] inst)
+        public static int ScanForOpcodePattern(this ILProcessor il, Func<int, Instruction, bool> check, params OpCode[] inst)
         {
-            return ScanForOpcodePattern(m, check, 0, inst);
+            return ScanForOpcodePattern(il, check, 0, inst);
         }
 
-        public static int ScanForOpcodePattern(this MethodDefinition m, Func<int, Instruction, bool> check, int nStartOffset, params OpCode[] inst)
+        public static int ScanForOpcodePattern(this ILProcessor il, Func<int, Instruction, bool> check, int nStartOffset, params OpCode[] inst)
         {
-            var il = m.Body.GetILProcessor();
-
             for (var x = nStartOffset; x < il.Body.Instructions.Count - inst.Length; x++)
             {
                 if (il.Body.Instructions[x].OpCode != inst[0])

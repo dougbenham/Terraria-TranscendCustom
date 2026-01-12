@@ -82,5 +82,10 @@ namespace TranscendsCustomizations
         [Label("Homing Projectiles")]
         [DefaultValue(true)]
         public bool HomingProjectiles;
+
+        [Label("Calamity: Remove abyssal diving gear out-of-water move speed reduction")]
+        [DefaultValue(true)]
+        [ReloadRequired]
+        public bool RemoveAbyssalDivingGearSpeedReduction;
     }
 }
